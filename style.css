@@ -16,7 +16,7 @@ body{
 .container{
     margin-top: 1.4rem;
     width: 90vw;
-    max-width: 400.269px;
+    max-width: 450.269px;
     min-height: 87vh;
     /* min-height: 594.6px; */
     background-color: #AAAAAA;
@@ -93,6 +93,37 @@ body{
 }
 .delete:active{
     background-color: #7474ce;
+}
+.pupup{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 51, 51,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: circle(50px);
+    display: none;
+}
+.con{
+    padding: 5rem 10rem;
+    border-radius: 1rem;
+    background-color: #333;
+    
+}
+.pu{
+    background: none;
+    color: white;
+    border: 3px solid white;
+    transition: background 0.3s ease-in-out,color 0.3s ease-in-out;
+    border-radius: 1rem;
+    
+}
+.pu:hover{
+    background: white;
+    color: #333;
 }
 @media screen and (min-height:663px){
     .container{

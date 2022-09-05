@@ -1,89 +1,164 @@
-const colorPicker = document.querySelector(".colorPicker");
-const clear = document.querySelector(".clear");
-const btn = document.querySelectorAll(".btn");
-colorPicker.value = chroma.random();
-let Color = colorPicker.value;
-const range = document.querySelector("#value");
-const date = document.querySelector(".date"); 
-const Colormode = document.querySelector(".Colormode"); 
-Colormode.classList.add("active");
-let mode = "Colormode";
-
-date.innerText = new Date().getFullYear();
-btn.forEach((ele) =>{
-    ele.addEventListener("click",() =>{
-        btn.forEach((ele) =>{
-            ele.classList.remove("active");
+let display_value = "";
+let Value1 = ''; 
+let Value2 = ''; 
+let ValueOpa = ''; 
+const divide =  (N1,N2) => {
+    if(N2 == 0){
+        return "LMAO";
+    }
+    return N1 / N2;
+};
+const multiply =  (N1,N2) => {
+    return N1 * N2;
+};
+const subtract =  (N1,N2) => {
+    return N1 - N2;
+};
+const add =  (N1,N2) => {
+    return N1 + N2;
+};
+const operate = (N1,N2,opa) =>{
+    if(opa == "+"){
+        return add(N1,N2);
+    }
+    else if(opa == "-"){
+        return subtract(N1,N2);
+    }
+    else if(opa == "*"){
+        return multiply(N1,N2);
+    }
+    else if(opa == "/"){
+        return divide(N1,N2);
+    }
+};
+let isclear = true;
+const clear = () =>{
+    const clear_btn = document.querySelector(".clear");
+    clear_btn.addEventListener("click",() => {
+        const lastOperation = document.querySelector(".lastOperation");
+        const CurrentOperation = document.querySelector(".CurrentOperation");
+        lastOperation.innerText = "";
+        CurrentOperation.innerText = "0";
+        lastOperation.innerText = "0";
+        isclear = true;
+        display_value = "";
+        Value1 = ''; 
+        Value2 = ''; 
+        ValueOpa = ''; 
+    });
+};
+const backSpace = ()
+const storeValue = () =>{
+    const btn_nb = document.querySelectorAll(".btn_nb");
+    const CurrentOperation = document.querySelector(".CurrentOperation");
+    const btn_equals = document.querySelector(".btn_equals");
+    const btns_opi = document.querySelectorAll(".opi");
+    const lastOperation = document.querySelector(".lastOperation");
+    const pu_btn = document.querySelector(".pu");
+    
+    pu_btn.addEventListener("click",() =>{
+        isclear = true;
+        display_value = "";
+        Value1 = ''; 
+        Value2 = ''; 
+        ValueOpa = '';
+        CurrentOperation.textContent = "0";
+        lastOperation.textContent = "0";
+        const SlideTl = gsap.timeline({defaults:{duration : 1 , ease : "power2.inOut"}});
+        SlideTl.to(".pupup",{clipPath: 'circle(50px)'});
+        SlideTl.to(".pupup",{display : 'none' },"-=1");
+        return;
+    });
+    btn_nb.forEach((nb) =>{
+        nb.addEventListener("click",() => {
+            if(isclear){
+                CurrentOperation.textContent = "";
+            }
+            display_value += nb.textContent;
+            CurrentOperation.textContent = display_value;
+            // console.log(nb.textContent);
+            isclear = false; 
+            console.log(display_value);
         });
-        ele.classList.add("active");
-        mode =  ele.classList[1];
-        console.log(mode);
     });
-});
+    btns_opi.forEach((nb) =>{
+        nb.addEventListener("click",() => {
+            if (Value1 != "" && ValueOpa != "" && display_value !=  ""){
+                if (Value1 != "" && ValueOpa != "" && display_value !=  ""){
+                    
+                    Value2 = display_value;
+                    lastOperation.textContent = Value1 + ` ${ValueOpa} ` + Value2 + ' = ' ;
+                    if(String(operate(Number(Value1),Number(Value2),ValueOpa)).includes(".")){
+                        CurrentOperation.textContent = operate(Number(Value1),Number(Value2),ValueOpa).toFixed(2);
+                        Value1 = operate(Number(Value1),Number(Value2),ValueOpa).toFixed(2);
+                    }
+                    else{
+                        CurrentOperation.textContent = operate(Number(Value1),Number(Value2),ValueOpa);
+                        Value1 = operate(Number(Value1),Number(Value2),ValueOpa);
+                    }
+                    display_value = "";
+                    if(Value1 == "LMAO"){
+                        gsap.to(".pupup",1,{display : 'flex', clipPath: 'circle(100%)'});
+                    }
+                }
+            }
+            if(Value1){
+                lastOperation.textContent = Value1 + ' ' + nb.textContent;
+                Value2 = display_value;
+                display_value = "";
+                CurrentOperation.textContent = "0";
+                isclear = true;
+                ValueOpa = nb.textContent;
 
-clear.addEventListener("click",(e) =>{
-    let white = chroma('white').hex();
-    const childe = document.querySelectorAll(".childe");
-    childe.forEach((ele) =>{
-        ele.style.backgroundColor = white;
-    });
-
-});
-
-colorPicker.addEventListener("input",(e) =>{
-    Color = e.target.value;
-});
-
-
-const colorTheGame = (e) =>{
-    if(mode == 'Colormode'){
-        e.target.style.backgroundColor = Color;
-    }
-    else if(mode == 'Rainbowmode'){
-        let randome = chroma.random();
-        e.target.style.backgroundColor = randome;
-    }
-    else if(mode == 'Erasermode'){
-        let white = chroma('white').hex();
-        e.target.style.backgroundColor = white;
-    }
-}
-
-const updateText = () =>{
-    const range = document.querySelector("#value");
-    const sizeValue = document.querySelector(".sizeValue");
-    range.addEventListener("input",(e) =>{
-        sizeValue.innerText = `${e.target.value} X ${e.target.value}`;
-    });
-}
-const updateTabel = () =>{
-    const range = document.querySelector("#value");
-    range.addEventListener("change",(e) =>{
-        createTable(e.target.value);
-    });
-}
-const createTable = (Number) =>{
-    const game = document.querySelector(".game");
-    const childes = document.querySelectorAll(".childe");
-    gsap.to(game,0,{gridTemplateColumns : `repeat(${Number},1fr)`});
-    gsap.to(game,0,{gridTemplateRows : `repeat(${Number},1fr)`});
-    if(childes){
-        childes.forEach((e) =>{
-            e.remove();
+            }
+            else{
+                Value1 = display_value;
+                display_value = "";
+                CurrentOperation.textContent = "0";
+                isclear = true;
+                ValueOpa = nb.textContent;
+                lastOperation.textContent = Value1 + ' ' + nb.textContent;
+            }
+            
         });
-    }
-    for (let i = 0; i < (Number * Number); i++) {
-        const childe = document.createElement("div");
-        childe.classList.add(`childe`, `${i + 1}`);
-        childe.addEventListener("mouseover", (e) =>{
-            colorTheGame(e);
-        });
-        game.appendChild(childe);
-    }
-}
+    });
+    btn_equals.addEventListener("click",() =>{ 
+        if (Value1 != "" && ValueOpa != "" && display_value !=  ""){
+        Value2 = display_value;
+        lastOperation.textContent = Value1 + ` ${ValueOpa} ` + Value2 + ' = ' ;
+        if(String(operate(Number(Value1),Number(Value2),ValueOpa)).includes(".")){
+            CurrentOperation.textContent = operate(Number(Value1),Number(Value2),ValueOpa).toFixed(2);
+            Value1 = operate(Number(Value1),Number(Value2),ValueOpa).toFixed(2);
+        }
+        else{
+            CurrentOperation.textContent = operate(Number(Value1),Number(Value2),ValueOpa);
+            Value1 = operate(Number(Value1),Number(Value2),ValueOpa);
+        }
+        display_value = "";
+        console.log("value1",Value1,"value2",Value2);
+        if(Value1 == "LMAO"){
+                gsap.to(".pupup",1,{display : 'flex', clipPath: 'circle(100%)'});    
+                isclear = true;
+                display_value = "";
+                Value1 = ''; 
+                Value2 = ''; 
+                ValueOpa = '';
+                CurrentOperation.textContent = "LMAO";
+                lastOperation.textContent = "0";
+                return; 
+        }
 
-createTable(range.value);
-updateText();
-updateTabel();
+    }
+    })
+};
 
-console.log("gfg");   
+// console.log(operate(10,5,"+"));
+// console.log(operate(10,5,"-"));
+// console.log(operate(10,5,"*"));
+// console.log(operate(10,5,"/"));
+clear();
+storeValue();
+// console.log(divide(10,5));
+// console.log(multiply(10,5));
+// console.log(subtract(10,5));
+// console.log(add(10,5));
