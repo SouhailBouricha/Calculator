@@ -1,0 +1,111 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: #F6F6F6;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: auto;
+    /* width: 100vw; */
+}
+.container{
+    margin-top: 1.4rem;
+    width: 90vw;
+    max-width: 512.269px;
+    min-height: 87vh;
+    /* min-height: 594.6px; */
+    background-color: #AAAAAA;
+    border-radius: 1.2rem;
+    border: 3px solid #333;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.screen{
+    width: 100%;
+    background-color: #EEEEEE;
+    margin: 0rem auto;
+    border: 3px solid #333;
+    border-radius: .5rem;
+    padding: 1.5rem;
+    text-align: right;
+    margin-bottom: 1.25rem;
+}
+.lastOperation{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+.CurrentOperation{
+    font-size: 2.3rem;
+    font-weight: 500;
+    width: 100%;
+    word-wrap: break-word;
+}
+.settings{
+    flex: 1fr;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 0.5rem;
+}
+
+.btn{
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1.25rem;
+    padding: 1.25rem;
+    border: 3px solid #333;
+    border-radius: .5rem;
+    background-color: #EEEEEE;
+}
+.btn:hover{
+    background-color: #DDDDDD;
+}
+.btn:active{
+    background-color: #c9c8c8;
+}
+.clear{
+    grid-column: 1/3;
+    background-color: #EE9999;
+}
+.clear:hover{
+    background-color: #d38787;
+}
+.clear:active{
+    background-color: #b46666;
+}
+.delete{
+    grid-column: 3/5;
+    background-color: #AAAAFF;
+}
+.delete:hover{
+    background-color: #8c8cda;
+}
+.delete:active{
+    background-color: #7474ce;
+}
+@media screen and (min-height:663px){
+    .container{
+        min-height: auto;
+        height: 700px;
+    }
+}
+@media screen and (max-width:420px){
+    .container{
+        padding: 0.5rem;
+        width: 95vw;
+    }
+    .btn{
+        padding: 1.5rem;
+    }
+}
