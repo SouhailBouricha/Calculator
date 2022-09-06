@@ -47,15 +47,32 @@ const clear = () =>{
         ValueOpa = ''; 
     });
 };
-const backSpace = ()
+const backSpace = () =>{
+    // const deleteBtn = document.querySelector(".delete");
+    const CurrentOperation = document.querySelector(".CurrentOperation");
+    if(display_value){
+        if(display_value.length == 1){
+            display_value = 0;
+            CurrentOperation.textContent = display_value;
+        }
+        else{
+            display_value =  display_value.slice(0,display_value.length - 1); 
+            CurrentOperation.textContent = display_value;
+        }
+    }
+};
+
 const storeValue = () =>{
     const btn_nb = document.querySelectorAll(".btn_nb");
     const CurrentOperation = document.querySelector(".CurrentOperation");
     const btn_equals = document.querySelector(".btn_equals");
     const btns_opi = document.querySelectorAll(".opi");
     const lastOperation = document.querySelector(".lastOperation");
+    const deleteBtn = document.querySelector(".delete");
     const pu_btn = document.querySelector(".pu");
-    
+    deleteBtn.addEventListener("click",() =>{
+        backSpace();
+    });
     pu_btn.addEventListener("click",() =>{
         isclear = true;
         display_value = "";
@@ -74,11 +91,25 @@ const storeValue = () =>{
             if(isclear){
                 CurrentOperation.textContent = "";
             }
-            display_value += nb.textContent;
-            CurrentOperation.textContent = display_value;
-            // console.log(nb.textContent);
-            isclear = false; 
-            console.log(display_value);
+            if(nb.textContent == "."){
+                if(display_value){
+                    if(!display_value.includes(".")){
+                        display_value += nb.textContent;
+                        CurrentOperation.textContent = display_value;
+                    }
+                }
+                else{
+                    display_value = "0."
+                    CurrentOperation.textContent = display_value;
+                }
+            }
+            else{
+                display_value += nb.textContent;
+                CurrentOperation.textContent = display_value;
+                // console.log(nb.textContent);
+                isclear = false; 
+                console.log(display_value);
+            }
         });
     });
     btns_opi.forEach((nb) =>{
