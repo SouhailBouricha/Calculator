@@ -82,7 +82,7 @@ const storeValue = () =>{
         CurrentOperation.textContent = "0";
         lastOperation.textContent = "0";
         const SlideTl = gsap.timeline({defaults:{duration : 1 , ease : "power2.inOut"}});
-        SlideTl.to(".pupup",{clipPath: 'circle(50px)'});
+        SlideTl.to(".pupup",{clipPath: 'circle(0px)'});
         SlideTl.to(".pupup",{display : 'none' },"-=1");
         return;
     });
