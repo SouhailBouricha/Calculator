@@ -9,3 +9,8 @@ const person = {
     }
   };
 console.log(person);
+console.log(person.name);
+console.log(person.name[0]);
+console.log(person.age);
+console.log(person.bio());
+console.log(person.introduceSelf());
