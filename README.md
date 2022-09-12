@@ -1,4 +1,4 @@
-# Calculator
+# Calculator App
 
 ![Design preview for the Project: Etch-A-Sketch project](./icons/img1.PNG)
 
