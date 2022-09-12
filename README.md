@@ -1,4 +1,4 @@
-# Calculator App
+# Calculator App 🎉
 
 ![Design preview for the Project: Calculator project](./icons/img1.PNG)
 
